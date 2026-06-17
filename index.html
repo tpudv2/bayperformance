@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,600;1,700;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#051836;color:#e4e4e4;font-family:Inter,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:#7fa8d8;color:#030f22}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .navlink::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:0;background:#7fa8d8;transition:width .28s ease}
+  .navlink:hover{color:#fff}
+  .navlink:hover::after{width:100%}
+  .svc-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#7fa8d8;transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
+  .svc-card:hover{transform:translateY(-4px);border-color:rgba(228,228,228,.22)!important}
+  .svc-card:hover::before{transform:scaleY(1)}
+  .step:hover{background:rgba(127,168,216,.05)}
+  .hdr.scrolled{background:rgba(5,24,54,.82)!important;backdrop-filter:blur(14px);border-bottom:1px solid rgba(228,228,228,.12)!important;padding:14px 0!important}
+  .mobile-panel{transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+  .mobile-panel.open{transform:none}
+  .backdrop{opacity:0;pointer-events:none;transition:.3s}
+  .backdrop.open{opacity:1;pointer-events:auto}
+  .menu-toggle{display:none}
+  .mobile-panel,.backdrop{display:none}
+  @media(max-width:980px){
+    .hero-grid{grid-template-columns:1fr!important;gap:40px!important}
+    .ba-frame{max-width:520px}
+    .contact-grid{grid-template-columns:1fr!important;gap:36px!important}
+    .insurance{padding:42px 28px!important}
+  }
+  @media(max-width:760px){
+    .nav-links{display:none!important}
+    .nav-wa{display:none!important}
+    .menu-toggle{display:flex!important}
+    .mobile-panel{display:block!important}
+    .backdrop{display:block!important}
+    .services-grid{grid-template-columns:1fr!important}
+    .stats-grid{grid-template-columns:repeat(2,1fr)!important;gap:26px!important;row-gap:34px!important}
+    .steps{grid-template-columns:1fr!important}
+    .step{border-left:none!important;border-top:1px solid rgba(228,228,228,.12)!important}
+    .steps .step:first-child{border-top:none!important}
+    .gallery{grid-template-columns:1fr 1fr!important}
+    .blocksec{padding:72px 0!important}
+  }
+  @media(max-width:430px){
+    .gallery{grid-template-columns:1fr!important}
+    .stats-grid{grid-template-columns:1fr 1fr!important}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .reveal,.ba-frame{opacity:1!important;transform:none!important}
+  }
+</style>
+</helmet>
+
+<header class="hdr {{ scrolledClass }}" style="position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid transparent;padding:22px 0;transition:background .35s ease,border-color .35s ease,padding .35s ease;">
+  <div style="width:min(1180px,92vw);margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+    <a href="#" aria-label="BAY Performance inicio" style="display:flex;align-items:center;"><img src="bp-logo.png" alt="BAY Performance" style="height:42px;width:auto;border-radius:8px;display:block;"></a>
+    <nav class="nav-links" style="display:flex;gap:34px;align-items:center;">
+      <a href="#servicios" class="navlink" style="position:relative;padding:4px 0;font-family:Saira,sans-serif;font-weight:500;font-size:.84rem;letter-spacing:.04em;color:#aeb8c9;text-transform:uppercase;text-decoration:none;transition:color .25s;">Servicios</a>
+      <a href="#proceso" class="navlink" style="position:relative;padding:4px 0;font-family:Saira,sans-serif;font-weight:500;font-size:.84rem;letter-spacing:.04em;color:#aeb8c9;text-transform:uppercase;text-decoration:none;transition:color .25s;">Proceso</a>
+      <a href="#trabajos" class="navlink" style="position:relative;padding:4px 0;font-family:Saira,sans-serif;font-weight:500;font-size:.84rem;letter-spacing:.04em;color:#aeb8c9;text-transform:uppercase;text-decoration:none;transition:color .25s;">Trabajos</a>
+      <a href="#seguros" class="navlink" style="position:relative;padding:4px 0;font-family:Saira,sans-serif;font-weight:500;font-size:.84rem;letter-spacing:.04em;color:#aeb8c9;text-transform:uppercase;text-decoration:none;transition:color .25s;">Seguros</a>
+      <a href="#contacto" class="navlink" style="position:relative;padding:4px 0;font-family:Saira,sans-serif;font-weight:500;font-size:.84rem;letter-spacing:.04em;color:#aeb8c9;text-transform:uppercase;text-decoration:none;transition:color .25s;">Contacto</a>
+    </nav>
+    <a href="{{ wa }}" class="nav-wa" target="_blank" rel="noopener" style="font-family:Saira,sans-serif;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.82rem;padding:12px 22px;border-radius:2px;background:#25d366;color:#04140a;display:inline-flex;align-items:center;gap:9px;text-decoration:none;transition:transform .2s ease,box-shadow .25s ease;white-space:nowrap;" style-hover="transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(37,211,102,.6);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.99-1.048zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg>
+      WhatsApp
+    </a>
+    <button class="menu-toggle" aria-label="Abrir menú" onClick="{{ toggleMenu }}" style="background:none;border:none;color:#e4e4e4;cursor:pointer;flex-direction:column;gap:5px;padding:6px;">
+      <span style="width:24px;height:2px;background:#e4e4e4;display:block;"></span>
+      <span style="width:24px;height:2px;background:#e4e4e4;display:block;"></span>
+      <span style="width:24px;height:2px;background:#e4e4e4;display:block;"></span>
+    </button>
+  </div>
+</header>
+
+<div class="backdrop {{ menuClass }}" onClick="{{ closeMenu }}" style="position:fixed;inset:0;background:rgba(3,15,34,.6);z-index:150;"></div>
+<aside class="mobile-panel {{ menuClass }}" style="position:fixed;inset:0 0 0 auto;width:78%;max-width:320px;z-index:200;background:#030f22;border-left:1px solid rgba(228,228,228,.12);padding:90px 30px 30px;">
+  <a href="#servicios" onClick="{{ closeMenu }}" style="display:block;font-family:Saira,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#aeb8c9;padding:16px 0;border-bottom:1px solid rgba(228,228,228,.12);font-size:1rem;text-decoration:none;">Servicios</a>
+  <a href="#proceso" onClick="{{ closeMenu }}" style="display:block;font-family:Saira,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#aeb8c9;padding:16px 0;border-bottom:1px solid rgba(228,228,228,.12);font-size:1rem;text-decoration:none;">Proceso</a>
+  <a href="#trabajos" onClick="{{ closeMenu }}" style="display:block;font-family:Saira,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#aeb8c9;padding:16px 0;border-bottom:1px solid rgba(228,228,228,.12);font-size:1rem;text-decoration:none;">Trabajos</a>
+  <a href="#seguros" onClick="{{ closeMenu }}" style="display:block;font-family:Saira,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#aeb8c9;padding:16px 0;border-bottom:1px solid rgba(228,228,228,.12);font-size:1rem;text-decoration:none;">Seguros</a>
+  <a href="#contacto" onClick="{{ closeMenu }}" style="display:block;font-family:Saira,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#aeb8c9;padding:16px 0;border-bottom:1px solid rgba(228,228,228,.12);font-size:1rem;text-decoration:none;">Contacto</a>
+  <a href="{{ wa }}" target="_blank" rel="noopener" onClick="{{ closeMenu }}" style="margin-top:22px;width:100%;justify-content:center;font-family:Saira,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:.82rem;padding:14px 22px;border-radius:2px;background:#25d366;color:#04140a;display:flex;align-items:center;gap:9px;text-decoration:none;">WhatsApp</a>
+</aside>
+
+<!-- HERO -->
+<section style="position:relative;padding:170px 0 90px;overflow:hidden;">
+  <div style="content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(120% 80% at 80% -10%,rgba(127,168,216,.16),transparent 55%),radial-gradient(90% 60% at 0% 100%,rgba(10,34,71,.9),transparent 60%);"></div>
+  <div class="hero-grid" style="position:relative;z-index:1;width:min(1180px,92vw);margin-inline:auto;display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;">
+    <div>
+      <p style="font-family:Saira,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.34em;font-size:.72rem;color:#7d889c;opacity:0;transform:translateY(24px);animation:rise .9s .15s cubic-bezier(.2,.7,.2,1) forwards;">Chapa y pintura · Bahía Blanca</p>
+      <h1 style="font-family:Saira,sans-serif;line-height:1.02;letter-spacing:-.01em;font-size:clamp(2.6rem,6vw,4.7rem);font-weight:800;font-style:italic;color:#fff;margin:20px 0 22px;opacity:0;transform:translateY(24px);animation:rise .9s .28s cubic-bezier(.2,.7,.2,1) forwards;">Terminación nivel<br>concesionario.<span style="font-style:normal;font-weight:300;color:#aeb8c9;display:block;font-size:.46em;letter-spacing:.02em;margin-top:.4em;line-height:1.2;">Reparación integral para quienes no negocian la calidad.</span></h1>
+      <p style="font-size:1.1rem;color:#aeb8c9;max-width:30ch;margin-bottom:34px;opacity:0;transform:translateY(24px);animation:rise .9s .42s cubic-bezier(.2,.7,.2,1) forwards;">Reconstruimos tu vehículo con procesos documentados, colorimetría profesional y productos PPG. Sin atajos.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;opacity:0;transform:translateY(24px);animation:rise .9s .56s cubic-bezier(.2,.7,.2,1) forwards;">
+        <a href="{{ wa }}" target="_blank" rel="noopener" style="font-family:Saira,sans-serif;font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.82rem;padding:12px 22px;border-radius:2px;background:#e4e4e4;color:#051836;display:inline-flex;align-items:center;gap:9px;text-decoration:none;transition:transform .2s ease,box-shadow .25s ease;" style-hover="transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(228,228,228,.4);">Pedir presupuesto</a>
+        <a href="#trabajos" style="font-family:Saira,sans-serif;font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.82rem;padding:12px 22px;border-radius:2px;background:transparent;color:#e4e4e4;border:1px solid rgba(228,228,228,.22);display:inline-flex;align-items:center;gap:9px;text-decoration:none;transition:border-color .25s,background .25s;" style-hover="border-color:#e4e4e4;background:rgba(228,228,228,.06);">Ver trabajos</a>
+      </div>
+    </div>
+    <div class="ba-frame" style="position:relative;aspect-ratio:4/3;border-radius:4px;overflow:hidden;box-shadow:0 30px 60px -25px rgba(0,0,0,.7);border:1px solid rgba(228,228,228,.22);opacity:0;transform:translateY(24px);animation:rise .9s .5s cubic-bezier(.2,.7,.2,1) forwards;">
+      <img src="images/hero.jpg" alt="BMW Serie 2 con terminación de pintura en cabina — BAY Performance" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,15,34,.6),transparent 45%);"></div>
+      <span style="position:absolute;left:18px;bottom:16px;z-index:3;font-family:Saira,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.18em;font-size:.7rem;color:#fff;background:rgba(5,24,54,.62);padding:6px 12px;border-radius:2px;backdrop-filter:blur(4px);">Terminación en cabina · Alta gama</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div style="border-top:1px solid rgba(228,228,228,.12);border-bottom:1px solid rgba(228,228,228,.12);padding:40px 0;background:#030f22;">
+  <div class="stats-grid" style="width:min(1180px,92vw);margin-inline:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;text-align:center;">
+    <div class="reveal"><h3 style="font-family:Saira,sans-serif;font-size:1.7rem;font-weight:700;color:#fff;font-style:italic;">PPG</h3><p style="font-size:.82rem;color:#7d889c;text-transform:uppercase;letter-spacing:.14em;margin-top:6px;font-family:Saira,sans-serif;">Pintura primera línea</p></div>
+    <div class="reveal"><h3 style="font-family:Saira,sans-serif;font-size:1.7rem;font-weight:700;color:#fff;font-style:italic;">2</h3><p style="font-size:.82rem;color:#7d889c;text-transform:uppercase;letter-spacing:.14em;margin-top:6px;font-family:Saira,sans-serif;">Cabinas presurizadas</p></div>
+    <div class="reveal"><h3 style="font-family:Saira,sans-serif;font-size:1.7rem;font-weight:700;color:#fff;font-style:italic;">Color</h3><p style="font-size:.82rem;color:#7d889c;text-transform:uppercase;letter-spacing:.14em;margin-top:6px;font-family:Saira,sans-serif;">Espectrofotómetro</p></div>
+    <div class="reveal"><h3 style="font-family:Saira,sans-serif;font-size:1.7rem;font-weight:700;color:#fff;font-style:italic;">Banco</h3><p style="font-size:.82rem;color:#7d889c;text-transform:uppercase;letter-spacing:.14em;margin-top:6px;font-family:Saira,sans-serif;">Enderezado estructural</p></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="blocksec" id="servicios" style="padding:100px 0;">
+  <div style="width:min(1180px,92vw);margin-inline:auto;">
+    <div class="reveal" style="max-width:62ch;margin-bottom:54px;">
+      <p style="font-family:Saira,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.34em;font-size:.72rem;color:#7d889c;">Servicios</p>
+      <h2 style="font-family:Saira,sans-serif;line-height:1.05;letter-spacing:-.01em;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;color:#fff;margin:14px 0 16px;font-style:italic;">Todo lo que tu vehículo necesita, bajo un mismo estándar.</h2>
+      <p style="color:#aeb8c9;font-size:1.05rem;">Desde un rayón hasta un siniestro estructural grave, cada reparación pasa por el mismo control de calidad.</p>
+    </div>
+    <div class="services-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:22px;">
+      <div class="svc-card reveal" style="background:#0a2247;border:1px solid rgba(228,228,228,.12);border-radius:4px;padding:36px;position:relative;overflow:hidden;transition:transform .3s ease,border-color .3s ease;">
+        <span style="font-family:Saira,sans-serif;font-size:.78rem;color:#7d889c;letter-spacing:.2em;">01</span>
+        <h3 style="font-family:Saira,sans-serif;font-size:1.4rem;color:#fff;font-weight:700;margin:6px 0 0;">Chapa</h3>
+        <ul style="list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:9px;">
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Reparación de siniestros leves, medios y graves</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Enderezado estructural en banco</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Reparación de paneles</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Sustitución de piezas</li>
+        </ul>
+      </div>
+      <div class="svc-card reveal" style="background:#0a2247;border:1px solid rgba(228,228,228,.12);border-radius:4px;padding:36px;position:relative;overflow:hidden;transition:transform .3s ease,border-color .3s ease;">
+        <span style="font-family:Saira,sans-serif;font-size:.78rem;color:#7d889c;letter-spacing:.2em;">02</span>
+        <h3 style="font-family:Saira,sans-serif;font-size:1.4rem;color:#fff;font-weight:700;margin:6px 0 0;">Pintura</h3>
+        <ul style="list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:9px;">
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Repintado parcial y completo</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Difuminados</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Reparación de rayones</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Restauración estética</li>
+        </ul>
+      </div>
+      <div class="svc-card reveal" style="background:#0a2247;border:1px solid rgba(228,228,228,.12);border-radius:4px;padding:36px;position:relative;overflow:hidden;transition:transform .3s ease,border-color .3s ease;">
+        <span style="font-family:Saira,sans-serif;font-size:.78rem;color:#7d889c;letter-spacing:.2em;">03</span>
+        <h3 style="font-family:Saira,sans-serif;font-size:1.4rem;color:#fff;font-weight:700;margin:6px 0 0;">Gestión de siniestros</h3>
+        <ul style="list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:9px;">
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Atención de asegurados</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Presupuestación para compañías de seguros</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Seguimiento administrativo</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Gestión de documentación</li>
+        </ul>
+      </div>
+      <div class="svc-card reveal" style="background:#0a2247;border:1px solid rgba(228,228,228,.12);border-radius:4px;padding:36px;position:relative;overflow:hidden;transition:transform .3s ease,border-color .3s ease;">
+        <span style="font-family:Saira,sans-serif;font-size:.78rem;color:#7d889c;letter-spacing:.2em;">04</span>
+        <h3 style="font-family:Saira,sans-serif;font-size:1.4rem;color:#fff;font-weight:700;margin:6px 0 0;">Estética y terminación</h3>
+        <ul style="list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:9px;">
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Pulido profesional</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Corrección de defectos</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Tratamientos de terminación</li>
+          <li style="position:relative;padding-left:20px;color:#aeb8c9;font-size:.95rem;"><span style="position:absolute;left:0;top:.62em;width:7px;height:7px;background:#7fa8d8;transform:rotate(45deg);"></span>Control estético final</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="blocksec" id="proceso" style="padding:100px 0;background:#030f22;border-top:1px solid rgba(228,228,228,.12);border-bottom:1px solid rgba(228,228,228,.12);">
+  <div style="width:min(1180px,92vw);margin-inline:auto;">
+    <div class="reveal" style="max-width:62ch;margin-bottom:54px;">
+      <p style="font-family:Saira,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.34em;font-size:.72rem;color:#7d889c;">Cómo trabajamos</p>
+      <h2 style="font-family:Saira,sans-serif;line-height:1.05;letter-spacing:-.01em;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;color:#fff;margin:14px 0 16px;font-style:italic;">Un proceso ordenado, de la recepción a la entrega.</h2>
+      <p style="color:#aeb8c9;font-size:1.05rem;">Sabés en qué etapa está tu vehículo en todo momento. Nada queda librado al azar.</p>
+    </div>
+    <div class="steps" style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;">
+      <div class="step reveal" style="padding:30px 22px;border-left:1px solid rgba(228,228,228,.12);position:relative;transition:background .3s;"><div style="font-family:Saira,sans-serif;font-weight:800;font-style:italic;font-size:2.6rem;color:#0a2247;line-height:1;-webkit-text-stroke:1px #7d889c;">1</div><h4 style="font-family:Saira,sans-serif;color:#fff;font-size:1.05rem;margin:14px 0 8px;letter-spacing:.02em;">Recepción</h4><p style="font-size:.86rem;color:#7d889c;">Inspección inicial, registro fotográfico y presupuesto.</p></div>
+      <div class="step reveal" style="padding:30px 22px;border-left:1px solid rgba(228,228,228,.12);position:relative;transition:background .3s;"><div style="font-family:Saira,sans-serif;font-weight:800;font-style:italic;font-size:2.6rem;color:#0a2247;line-height:1;-webkit-text-stroke:1px #7d889c;">2</div><h4 style="font-family:Saira,sans-serif;color:#fff;font-size:1.05rem;margin:14px 0 8px;letter-spacing:.02em;">Planificación</h4><p style="font-size:.86rem;color:#7d889c;">Evaluación técnica, pedido de repuestos y asignación de tareas.</p></div>
+      <div class="step reveal" style="padding:30px 22px;border-left:1px solid rgba(228,228,228,.12);position:relative;transition:background .3s;"><div style="font-family:Saira,sans-serif;font-weight:800;font-style:italic;font-size:2.6rem;color:#0a2247;line-height:1;-webkit-text-stroke:1px #7d889c;">3</div><h4 style="font-family:Saira,sans-serif;color:#fff;font-size:1.05rem;margin:14px 0 8px;letter-spacing:.02em;">Reparación</h4><p style="font-size:.86rem;color:#7d889c;">Chapa, preparación, pintura y armado.</p></div>
+      <div class="step reveal" style="padding:30px 22px;border-left:1px solid rgba(228,228,228,.12);position:relative;transition:background .3s;"><div style="font-family:Saira,sans-serif;font-weight:800;font-style:italic;font-size:2.6rem;color:#0a2247;line-height:1;-webkit-text-stroke:1px #7d889c;">4</div><h4 style="font-family:Saira,sans-serif;color:#fff;font-size:1.05rem;margin:14px 0 8px;letter-spacing:.02em;">Control de calidad</h4><p style="font-size:.86rem;color:#7d889c;">Verificación estructural, de color y estética. Limpieza final.</p></div>
+      <div class="step reveal" style="padding:30px 22px;border-left:1px solid rgba(228,228,228,.12);position:relative;transition:background .3s;"><div style="font-family:Saira,sans-serif;font-weight:800;font-style:italic;font-size:2.6rem;color:#0a2247;line-height:1;-webkit-text-stroke:1px #7d889c;">5</div><h4 style="font-family:Saira,sans-serif;color:#fff;font-size:1.05rem;margin:14px 0 8px;letter-spacing:.02em;">Entrega</h4><p style="font-size:.86rem;color:#7d889c;">Revisión junto al cliente y entrega de documentación.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="blocksec" id="trabajos" style="padding:100px 0;">
+  <div style="width:min(1180px,92vw);margin-inline:auto;">
+    <div class="reveal" style="max-width:62ch;margin-bottom:54px;">
+      <p style="font-family:Saira,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.34em;font-size:.72rem;color:#7d889c;">Trabajos</p>
+      <h2 style="font-family:Saira,sans-serif;line-height:1.05;letter-spacing:-.01em;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;color:#fff;margin:14px 0 16px;font-style:italic;">El resultado habla por nosotros.</h2>
+      <p style="color:#aeb8c9;font-size:1.05rem;">Reparaciones reales, antes y después. Una muestra de lo que entregamos todos los días.</p>
+    </div>
+    <div class="gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+      <div class="shot reveal" style="aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;border:1px solid rgba(228,228,228,.12);background:#0a2247;">
+        <img src="images/g1.jpg" alt="BMW Serie 2 terminado en cabina de pintura" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s ease;" style-hover="transform:scale(1.06);">
+        <span style="position:absolute;top:12px;left:12px;z-index:2;font-family:Saira,sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;background:rgba(5,24,54,.82);padding:5px 10px;border-radius:2px;color:#e4e4e4;backdrop-filter:blur(3px);">BMW Serie 2 · Terminado</span>
+      </div>
+      <div class="shot reveal" style="aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;border:1px solid rgba(228,228,228,.12);background:#0a2247;">
+        <img src="images/g2.jpg" alt="Vehículo con daño de siniestro en recepción" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s ease;" style-hover="transform:scale(1.06);">
+        <span style="position:absolute;top:12px;left:12px;z-index:2;font-family:Saira,sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;background:rgba(5,24,54,.82);padding:5px 10px;border-radius:2px;color:#e4e4e4;backdrop-filter:blur(3px);">Siniestro · Recepción</span>
+      </div>
+      <div class="shot reveal" style="aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;border:1px solid rgba(228,228,228,.12);background:#0a2247;">
+        <img src="images/g3.jpg" alt="Paragolpes pintados en cabina presurizada" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s ease;" style-hover="transform:scale(1.06);">
+        <span style="position:absolute;top:12px;left:12px;z-index:2;font-family:Saira,sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;background:rgba(5,24,54,.82);padding:5px 10px;border-radius:2px;color:#e4e4e4;backdrop-filter:blur(3px);">Pintura en cabina</span>
+      </div>
+      <div class="shot reveal" style="aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;border:1px solid rgba(228,228,228,.12);background:#0a2247;">
+        <img src="images/g4.jpg" alt="Restauración de vehículo clásico en chapa" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s ease;" style-hover="transform:scale(1.06);">
+        <span style="position:absolute;top:12px;left:12px;z-index:2;font-family:Saira,sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;background:rgba(5,24,54,.82);padding:5px 10px;border-radius:2px;color:#e4e4e4;backdrop-filter:blur(3px);">Restauración integral</span>
+      </div>
+      <div class="shot reveal" style="aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;border:1px solid rgba(228,228,228,.12);background:#0a2247;">
+        <img src="images/g5.jpg" alt="Desarme de frente para reparación de chapa" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s ease;" style-hover="transform:scale(1.06);">
+        <span style="position:absolute;top:12px;left:12px;z-index:2;font-family:Saira,sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;background:rgba(5,24,54,.82);padding:5px 10px;border-radius:2px;color:#e4e4e4;backdrop-filter:blur(3px);">Chapa · Desarme</span>
+      </div>
+      <div class="shot reveal" style="aspect-ratio:4/3;border-radius:4px;overflow:hidden;position:relative;border:1px solid rgba(228,228,228,.12);background:#0a2247;">
+        <img src="images/g6.jpg" alt="Detalle de terminación frontal de un BMW" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s ease;" style-hover="transform:scale(1.06);">
+        <span style="position:absolute;top:12px;left:12px;z-index:2;font-family:Saira,sans-serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;background:rgba(5,24,54,.82);padding:5px 10px;border-radius:2px;color:#e4e4e4;backdrop-filter:blur(3px);">Detalle de terminación</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSURANCE -->
+<section class="blocksec" id="seguros" style="padding:100px 0;">
+  <div style="width:min(1180px,92vw);margin-inline:auto;">
+    <div class="insurance reveal" style="background:linear-gradient(90deg,#051836 0%,#0a2247 100%);border:1px solid rgba(228,228,228,.22);border-radius:6px;padding:60px;position:relative;overflow:hidden;">
+      <div style="position:absolute;right:-60px;top:-60px;width:320px;height:320px;border:1px solid rgba(228,228,228,.12);border-radius:50%;"></div>
+      <div style="position:absolute;right:-10px;bottom:-120px;width:260px;height:260px;border:1px solid rgba(228,228,228,.12);border-radius:50%;"></div>
+      <div style="position:relative;z-index:2;max-width:62ch;">
+        <p style="font-family:Saira,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.34em;font-size:.72rem;color:#7d889c;">Trabajamos con compañías de seguros</p>
+        <h2 style="font-family:Saira,sans-serif;line-height:1.05;letter-spacing:-.01em;font-size:clamp(1.8rem,4vw,2.7rem);font-weight:700;font-style:italic;color:#fff;margin:14px 0 18px;">¿Tu seguro te pasó una lista de talleres?</h2>
+        <p style="color:#aeb8c9;font-size:1.05rem;margin-bottom:14px;">Elegí con tranquilidad. En BAY Performance manejamos todo el proceso del siniestro de punta a punta: presupuestación para la aseguradora, seguimiento administrativo y gestión de la documentación. Vos solo dejás el vehículo.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 30px;">
+          <span style="font-family:Saira,sans-serif;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#e4e4e4;border:1px solid rgba(228,228,228,.22);padding:8px 14px;border-radius:2px;background:rgba(3,15,34,.4);">Atención de asegurados</span>
+          <span style="font-family:Saira,sans-serif;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#e4e4e4;border:1px solid rgba(228,228,228,.22);padding:8px 14px;border-radius:2px;background:rgba(3,15,34,.4);">Tiempos de respuesta eficientes</span>
+          <span style="font-family:Saira,sans-serif;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#e4e4e4;border:1px solid rgba(228,228,228,.22);padding:8px 14px;border-radius:2px;background:rgba(3,15,34,.4);">Procesos documentados</span>
+          <span style="font-family:Saira,sans-serif;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#e4e4e4;border:1px solid rgba(228,228,228,.22);padding:8px 14px;border-radius:2px;background:rgba(3,15,34,.4);">Gestión de documentación</span>
+        </div>
+        <a href="{{ waSeguro }}" target="_blank" rel="noopener" style="font-family:Saira,sans-serif;font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.82rem;padding:12px 22px;border-radius:2px;background:#e4e4e4;color:#051836;display:inline-flex;align-items:center;gap:9px;text-decoration:none;transition:transform .2s ease,box-shadow .25s ease;" style-hover="transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(228,228,228,.4);">Consultar por mi siniestro</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="blocksec" id="contacto" style="padding:100px 0;">
+  <div style="width:min(1180px,92vw);margin-inline:auto;">
+    <div class="reveal" style="max-width:62ch;margin-bottom:54px;">
+      <p style="font-family:Saira,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.34em;font-size:.72rem;color:#7d889c;">Contacto</p>
+      <h2 style="font-family:Saira,sans-serif;line-height:1.05;letter-spacing:-.01em;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;color:#fff;margin:14px 0 16px;font-style:italic;">Pedí tu presupuesto.</h2>
+      <p style="color:#aeb8c9;font-size:1.05rem;">Escribinos por WhatsApp o acercate al taller. Te respondemos a la brevedad.</p>
+    </div>
+    <div class="contact-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
+      <div class="reveal" style="display:flex;flex-direction:column;gap:26px;">
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="flex:none;width:42px;height:42px;border:1px solid rgba(228,228,228,.22);border-radius:3px;display:flex;align-items:center;justify-content:center;color:#7fa8d8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><div style="font-family:Saira,sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;color:#7d889c;margin-bottom:3px;">Dirección</div><div style="color:#fff;font-size:1.05rem;font-weight:500;">[Calle y número]<small style="display:block;color:#aeb8c9;font-weight:400;font-size:.86rem;margin-top:2px;">Bahía Blanca, Buenos Aires</small></div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="flex:none;width:42px;height:42px;border:1px solid rgba(228,228,228,.22);border-radius:3px;display:flex;align-items:center;justify-content:center;color:#7fa8d8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+          <div><div style="font-family:Saira,sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;color:#7d889c;margin-bottom:3px;">Teléfono / WhatsApp</div><div style="color:#fff;font-size:1.05rem;font-weight:500;">+54 9 291 [número]</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="flex:none;width:42px;height:42px;border:1px solid rgba(228,228,228,.22);border-radius:3px;display:flex;align-items:center;justify-content:center;color:#7fa8d8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div><div style="font-family:Saira,sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;color:#7d889c;margin-bottom:3px;">Horarios</div><div style="color:#fff;font-size:1.05rem;font-weight:500;">Lun a Vie 8 a 18 h<small style="display:block;color:#aeb8c9;font-weight:400;font-size:.86rem;margin-top:2px;">Sábados 9 a 13 h</small></div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:flex-start;">
+          <div style="flex:none;width:42px;height:42px;border:1px solid rgba(228,228,228,.22);border-radius:3px;display:flex;align-items:center;justify-content:center;color:#7fa8d8;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg></div>
+          <div><div style="font-family:Saira,sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;color:#7d889c;margin-bottom:3px;">Email</div><div style="color:#fff;font-size:1.05rem;font-weight:500;">contacto@bayperformance.com.ar</div></div>
+        </div>
+      </div>
+      <div class="reveal" style="background:#0a2247;border:1px solid rgba(228,228,228,.12);border-radius:6px;padding:40px;">
+        <h3 style="font-family:Saira,sans-serif;color:#fff;font-size:1.5rem;font-weight:700;font-style:italic;margin-bottom:10px;">Hablemos de tu vehículo</h3>
+        <p style="color:#aeb8c9;margin-bottom:24px;font-size:.96rem;">Contanos qué le pasó y mandanos una foto. Te pasamos un presupuesto claro, sin sorpresas.</p>
+        <a href="{{ wa }}" target="_blank" rel="noopener" style="width:100%;justify-content:center;margin-bottom:12px;font-family:Saira,sans-serif;font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:.82rem;padding:12px 22px;border-radius:2px;background:#25d366;color:#04140a;display:inline-flex;align-items:center;gap:9px;text-decoration:none;transition:transform .2s ease,box-shadow .25s ease;" style-hover="transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(37,211,102,.6);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.99-1.048z"/></svg>
+          Escribir por WhatsApp
+        </a>
+        <a href="tel:+542910000000" style="width:100%;justify-content:center;font-family:Saira,sans-serif;font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.82rem;padding:12px 22px;border-radius:2px;background:transparent;color:#e4e4e4;border:1px solid rgba(228,228,228,.22);display:inline-flex;align-items:center;gap:9px;text-decoration:none;transition:border-color .25s,background .25s;" style-hover="border-color:#e4e4e4;background:rgba(228,228,228,.06);">Llamar al taller</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#030f22;border-top:1px solid rgba(228,228,228,.12);padding:54px 0 30px;">
+  <div style="width:min(1180px,92vw);margin-inline:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap;">
+      <div>
+        <a href="#" style="display:inline-block;"><img src="bp-logo.png" alt="BAY Performance" style="height:52px;width:auto;border-radius:10px;display:block;"></a>
+        <p style="color:#7d889c;font-size:.86rem;max-width:34ch;margin-top:14px;">Taller de chapa y pintura especializado en reparación integral y terminación premium. Bahía Blanca.</p>
+      </div>
+      <div style="display:flex;gap:14px;">
+        <a href="#" aria-label="Instagram" style="width:40px;height:40px;border:1px solid rgba(228,228,228,.12);border-radius:3px;display:flex;align-items:center;justify-content:center;color:#aeb8c9;transition:.25s;" style-hover="color:#051836;background:#e4e4e4;border-color:#e4e4e4;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="Facebook" style="width:40px;height:40px;border:1px solid rgba(228,228,228,.12);border-radius:3px;display:flex;align-items:center;justify-content:center;color:#aeb8c9;transition:.25s;" style-hover="color:#051836;background:#e4e4e4;border-color:#e4e4e4;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="{{ wa }}" aria-label="WhatsApp" style="width:40px;height:40px;border:1px solid rgba(228,228,228,.12);border-radius:3px;display:flex;align-items:center;justify-content:center;color:#aeb8c9;transition:.25s;" style-hover="color:#051836;background:#e4e4e4;border-color:#e4e4e4;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.99-1.048z"/></svg></a>
+      </div>
+    </div>
+    <div style="margin-top:36px;padding-top:24px;border-top:1px solid rgba(228,228,228,.12);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:#7d889c;font-size:.78rem;">
+      <span>© 2026 BAY Performance. Todos los derechos reservados.</span>
+      <span>Bahía Blanca · Buenos Aires · Argentina</span>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showFab }}" hint-placeholder-val="{{ true }}">
+  <a href="{{ wa }}" aria-label="WhatsApp" target="_blank" rel="noopener" style="position:fixed;right:22px;bottom:22px;z-index:90;width:58px;height:58px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px -6px rgba(37,211,102,.6);transition:transform .25s;" style-hover="transform:scale(1.08);">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#04140a"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.99-1.048zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413z"/></svg>
+  </a>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5492910000000&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showFab&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = { scrolled: false, menuOpen: false };
+
+  componentDidMount() {
+    this._onScroll = () => {
+      const s = window.scrollY > 20;
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+
+    this._io = new IntersectionObserver((es) => {
+      es.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); this._io.unobserve(e.target); }
+      });
+    }, { threshold: 0.14 });
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = (i % 4) * 60 + 'ms';
+        this._io.observe(el);
+      });
+    });
+
+    this._initBA();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    if (this._io) this._io.disconnect();
+    if (this._baMove) window.removeEventListener('pointermove', this._baMove);
+    if (this._baUp) window.removeEventListener('pointerup', this._baUp);
+  }
+
+  _initBA() {
+    const ba = document.getElementById('ba');
+    if (!ba) return;
+    const before = document.getElementById('baBefore');
+    const handle = document.getElementById('baHandle');
+    const knob = document.getElementById('baKnob');
+    let active = false;
+    const set = (x) => {
+      const r = ba.getBoundingClientRect();
+      let p = ((x - r.left) / r.width) * 100;
+      p = Math.max(0, Math.min(100, p));
+      before.style.clipPath = `inset(0 ${100 - p}% 0 0)`;
+      handle.style.left = p + '%';
+      knob.style.left = p + '%';
+    };
+    ba.addEventListener('pointerdown', e => { active = true; set(e.clientX); });
+    this._baMove = e => { if (active) set(e.clientX); };
+    window.addEventListener('pointermove', this._baMove);
+    this._baUp = () => { active = false; };
+    window.addEventListener('pointerup', this._baUp);
+  }
+
+  toggleMenu = () => this.setState(s => ({ menuOpen: !s.menuOpen }));
+  closeMenu = () => this.setState({ menuOpen: false });
+
+  renderVals() {
+    const num = (this.props.whatsappNumber ?? '5492910000000').replace(/[^0-9]/g, '');
+    const wa = 'https://wa.me/' + num;
+    return {
+      scrolledClass: this.state.scrolled ? 'scrolled' : '',
+      menuClass: this.state.menuOpen ? 'open' : '',
+      toggleMenu: this.toggleMenu,
+      closeMenu: this.closeMenu,
+      showFab: this.props.showFab ?? true,
+      wa,
+      waSeguro: wa + '?text=' + encodeURIComponent('Hola, mi seguro me pasó una lista de talleres y quiero consultar por un siniestro.'),
+    };
+  }
+}
+</script>
+</body>
+</html>
